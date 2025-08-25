@@ -1,0 +1,43 @@
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Define a single neuron
+class Neuron:
+    def __init__(self, input_size):
+        # Random initialization of weights and bias
+        self.weights = np.random.randn(input_size)
+        self.bias = np.random.randn()
+
+    def sigmoid(self, x):
+        return 1 / (1 + np.exp(-x))
+
+    def forward(self, inputs):
+        # Weighted sum of inputs + bias
+        weighted_sum = np.dot(self.weights, inputs) + self.bias
+        return self.sigmoid(weighted_sum)
+
+# Parameters
+input_size = 5       # each input sample has 5 features
+num_sample = 100     # number of samples
+
+# Generate random inputs
+inputs = np.random.randn(num_sample, input_size)
+
+# Create a neuron
+neuron = Neuron(input_size)
+
+# Store outputs for each input sample
+output = np.zeros(num_sample)
+for i in range(num_sample):
+    output[i] = neuron.forward(inputs[i])
+
+# Print input and output
+print("Inputs:\n", inputs[:5])   # showing first 5 samples
+print("\nOutputs:\n", output[:5])
+
+# Plot outputs
+plt.plot(output, 'o')
+plt.title("Neuron Outputs for Random Inputs")
+plt.xlabel("Sample Index")
+plt.ylabel("Neuron Output")
+plt.show()
